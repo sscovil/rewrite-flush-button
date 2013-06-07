@@ -11,7 +11,7 @@
             // Store callback method name and nonce field value in an array.
             var data = {
                 action: RFB.actionid,        // AJAX callback
-                nonce: $(RFB.nonceid).html() // Nonce field value
+                nonce: RFB.nonce // Nonce field value
             };
 
             // AJAX call.

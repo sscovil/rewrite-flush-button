@@ -84,12 +84,10 @@ class Rewrite_Flush_Button {
      */
     function button_description() {
         $desc  = __( 'Try flushing rewrite rules if your permalinks are not working correctly. This is usually caused by themes and plugins that add, remove or change custom post types & taxonomies.', 'rewrite-flush-button' );
-        $nonce = '<span id="' . self::$id . '_nonce" class="hidden">' . wp_create_nonce( self::$id . '_nonce' ) . '</span>';
         printf(
-            '<p id="%s_desc" class="description">%s</p>%s',
+            '<p id="%s_desc" class="description">%s</p>',
             self::$id,
-            $desc,
-            $nonce
+            $desc
         );
     }
 
@@ -113,7 +111,7 @@ class Rewrite_Flush_Button {
                 'actionid' => 'flush_rewrite_rules',
                 'buttonid' => '#' . self::$id,
                 'descid'   => '#' . self::$id . '_desc',
-                'nonceid'  => '#' . self::$id . '_nonce',
+                'nonce'    => wp_create_nonce( self::$id . '_nonce' )
             );
             wp_localize_script(
                 $handle      = self::$id,
@@ -129,7 +127,7 @@ class Rewrite_Flush_Button {
      * AJAX callback used to run flush_rewrite_rules() with nonce verification.
      */
     function flush_rewrite_rules() {
-        if( wp_verify_nonce( $_REQUEST['nonce'], self::$id . '_nonce' ) ) {
+        if( check_ajax_referer( self::$id . '_nonce', 'nonce' ) ) {
             flush_rewrite_rules();
             die('1'); // Success!
         } else {
