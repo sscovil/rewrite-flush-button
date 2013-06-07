@@ -10,10 +10,16 @@
  * License: GPL2
  */
 
+/**
+ * Only instantiate plugin class when viewing WP-Admin > Settings > Permalinks or doing AJAX in wp-admin.
+ */
 global $pagenow;
-if ( is_admin() && ( 'options-permalink.php' == $pagenow || defined( 'DOING_AJAX' ) ) )
+if ( 'options-permalink.php' == $pagenow || defined( 'DOING_AJAX' ) && is_admin() )
     Rewrite_Flush_Button::instance();
 
+/**
+ * Class Rewrite_Flush_Button
+ */
 class Rewrite_Flush_Button {
 
     protected static $instance, $id;
@@ -89,8 +95,6 @@ class Rewrite_Flush_Button {
 
     /**
      * Load JavaScript
-     *
-     * Only loads plugin script when viewing WP-Admin > Settings > Permalinks.
      */
     function load_js() {
         wp_register_script(
