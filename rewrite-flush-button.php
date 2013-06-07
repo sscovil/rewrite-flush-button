@@ -3,7 +3,7 @@
  * Plugin Name: Rewrite Flush Button
  * Plugin URI: http://shaunscovil.com
  * Description: Adds a 'Flush Rewrite Rules' button to WP-Admin > Settings > Permalinks.
- * Version: 0.1
+ * Version: 1.0
  * Author: sscovil
  * Author URI: http://shaunscovil.com
  * Text Domain: rewrite-flush-button
@@ -83,10 +83,10 @@ class Rewrite_Flush_Button {
      * Callback used in add_settings_field() to display a brief description and nonce field.
      */
     function button_description() {
-        $desc  = __( 'Try flushing rewrite rules if your permalinks are not working correctly. This is usually caused by themes and plugins that add, remove or change custom post types & taxonomies.', 'rewrite-flush-button' );
+        $desc  = __( 'Flushing rewrite rules if your permalinks are not working correctly. This is usually caused by themes and plugins that add, remove or change custom post types & taxonomies.', 'rewrite-flush-button' );
         $nonce = '<span id="' . self::$id . '_nonce" class="hidden">' . wp_create_nonce( self::$id . '_nonce' ) . '</span>';
         printf(
-            '<p id="%s_desc" class="description">%s</p>%s',
+            '<div id="%s_desc" class="description" style="display: inline-block">%s</div>%s',
             self::$id,
             $desc,
             $nonce
@@ -108,19 +108,38 @@ class Rewrite_Flush_Button {
             );
             wp_enqueue_script( self::$id );
 
-            // Pass array of parameters to JavaScript as an object called 'RFB'.
-            $params = array(
-                'actionid' => 'flush_rewrite_rules',
-                'buttonid' => '#' . self::$id,
-                'descid'   => '#' . self::$id . '_desc',
-                'nonceid'  => '#' . self::$id . '_nonce',
-            );
+            // Pass array of parameters to JavaScript as object called 'RFB'.
+            $params = $this->localize_script_parameters();
             wp_localize_script(
                 $handle      = self::$id,
                 $object_name = 'RFB',
                 $params
             );
         }
+    }
+
+    /**
+     * Localize Script Parameters
+     *
+     * @return array Parameters for wp_localize_script().
+     */
+    function localize_script_parameters() {
+        $success_msg = __(
+            'Success! Rewrite rules have been flushed.',
+            'rewrite-flush-button'
+        );
+        $error_msg = __(
+            'Error! Unable to flush rewrite rules; try deactivating plugins and switching to default theme.',
+            'rewrite-flush-button'
+        );
+        return array(
+            'action_id'   => 'flush_rewrite_rules',
+            'button_id'   => '#' . self::$id,
+            'desc_id'     => '#' . self::$id . '_desc',
+            'nonce_id'    => '#' . self::$id . '_nonce',
+            'success_msg' => $success_msg,
+            'error_msg'   => $error_msg,
+        );
     }
 
     /**
@@ -131,9 +150,9 @@ class Rewrite_Flush_Button {
     function flush_rewrite_rules() {
         if( wp_verify_nonce( $_REQUEST['nonce'], self::$id . '_nonce' ) ) {
             flush_rewrite_rules();
-            die('1'); // Success!
+            die( '1' ); // Success!
         } else {
-            die('0'); // Error.
+            die( '0' ); // Error.
         }
     }
 
