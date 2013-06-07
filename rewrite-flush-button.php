@@ -131,9 +131,9 @@ class Rewrite_Flush_Button {
     function flush_rewrite_rules() {
         if( wp_verify_nonce( $_REQUEST['nonce'], self::$id . '_nonce' ) ) {
             flush_rewrite_rules();
-            die(1); // Success!
+            die('1'); // Success!
         } else {
-            die(0); // Error.
+            die('0'); // Error.
         }
     }
 
