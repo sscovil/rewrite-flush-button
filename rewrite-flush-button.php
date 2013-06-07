@@ -84,12 +84,10 @@ class Rewrite_Flush_Button {
      */
     function button_description() {
         $desc  = __( 'Flushing rewrite rules if your permalinks are not working correctly. This is usually caused by themes and plugins that add, remove or change custom post types & taxonomies.', 'rewrite-flush-button' );
-        $nonce = '<span id="' . self::$id . '_nonce" class="hidden">' . wp_create_nonce( self::$id . '_nonce' ) . '</span>';
         printf(
-            '<div id="%s_desc" class="description" style="display: inline-block">%s</div>%s',
+            '<div id="%s_desc" class="description" style="display: inline-block">%s</div>',
             self::$id,
-            $desc,
-            $nonce
+            $desc
         );
     }
 
@@ -102,18 +100,17 @@ class Rewrite_Flush_Button {
         global $pagenow;
         if ( $pagenow == 'options-permalink.php' ) {
             wp_register_script(
-                self::$id,
-                plugins_url( 'js/rewrite-flush-button.js', __FILE__ ),
-                array( 'jquery' )
+                $handle = self::$id,
+                $src    = plugins_url( 'js/rewrite-flush-button.js', __FILE__ ),
+                $deps   = array( 'jquery' )
             );
             wp_enqueue_script( self::$id );
 
             // Pass array of parameters to JavaScript as object called 'RFB'.
-            $params = $this->localize_script_parameters();
             wp_localize_script(
                 $handle      = self::$id,
                 $object_name = 'RFB',
-                $params
+                $params      = $this->localize_script_parameters()
             );
         }
     }
@@ -129,14 +126,14 @@ class Rewrite_Flush_Button {
             'rewrite-flush-button'
         );
         $error_msg = __(
-            'Error! Unable to flush rewrite rules; try deactivating plugins and switching to default theme.',
+            'Error! Unable to flush rewrite rules; try deactivating all other plugins and switching to default theme.',
             'rewrite-flush-button'
         );
         return array(
             'action_id'   => 'flush_rewrite_rules',
             'button_id'   => '#' . self::$id,
             'desc_id'     => '#' . self::$id . '_desc',
-            'nonce_id'    => '#' . self::$id . '_nonce',
+            'nonce'       => wp_create_nonce( self::$id . '_nonce' ),
             'success_msg' => $success_msg,
             'error_msg'   => $error_msg,
         );
@@ -148,7 +145,7 @@ class Rewrite_Flush_Button {
      * AJAX callback used to run flush_rewrite_rules() with nonce verification.
      */
     function flush_rewrite_rules() {
-        if( wp_verify_nonce( $_REQUEST['nonce'], self::$id . '_nonce' ) ) {
+        if( check_ajax_referer( self::$id . '_nonce', 'nonce' ) ) {
             flush_rewrite_rules();
             die( '1' ); // Success!
         } else {

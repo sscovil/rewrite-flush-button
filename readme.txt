@@ -1,6 +1,6 @@
 === Rewrite Flush Button ===
 
-Contributors: sscovil 
+Contributors: sscovil, trepmal
 Tags: rewrite, flush, permalink, admin, troubleshooting
 Requires at least: 3.1
 Tested up to: 3.5.1
