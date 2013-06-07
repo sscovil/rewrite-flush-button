@@ -11,8 +11,7 @@ Adds a "Flush Rewrite Rules" button to WP-Admin > Settings > Permalinks.
 
 == Description ==
 
-A simple plugin that adds a Troubleshooting section to WP-Admin > Settings > Permalinks with a button for flushing
-your rewrite rules.
+A simple plugin that adds a Troubleshooting section to WP-Admin > Settings > Permalinks with a button for flushing your rewrite rules.
 
 From the Codex:
 
@@ -20,13 +19,19 @@ From the Codex:
 
 This plugin enables WordPress site admins to manually perform this action once, as needed, whenever there is a problem.
 
+
 == Installation ==
 
 1. Install and activate the plugin via `WP-Admin > Plugins`.
 2. Go to `WP-Admin > Settings > Permalinks` and click the button to flush rewrite rules.
 
 
+== Screenshots ==
+
+1. A `Flush Rewrite Rules` button is added to WP-Admin > Settings > Permalinks.
+
+
 == Changelog ==
 
-= 0.1 =
-* Initial release.
+= 1.0 =
+* Initial public release.

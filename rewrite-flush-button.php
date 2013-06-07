@@ -51,12 +51,11 @@ class Rewrite_Flush_Button {
      * Add Settings Section
      */
     function add_settings_section() {
-        $label = __( 'Troubleshooting', 'rewrite-flush-button' );
         add_settings_section(
-            'troubleshooting',
-            $label,
-            array( $this, 'add_settings_field' ),
-            'permalink'
+            $id       = 'troubleshooting',
+            $title    = __( 'Troubleshooting', 'rewrite-flush-button' ),
+            $callback = array( $this, 'add_settings_field' ),
+            $page     = 'permalink'
         );
     }
 
@@ -67,13 +66,12 @@ class Rewrite_Flush_Button {
      */
     function add_settings_field() {
         $label = __( 'Flush Rewrite Rules', 'rewrite-flush-button' );
-        $button = '<input type="button" id="' . self::$id . '" value="' . $label . '" class="button" />';
         add_settings_field(
-            self::$id,
-            $button,
-            array( $this, 'button_description' ),
-            'permalink',
-            'troubleshooting'
+            $id       = self::$id,
+            $title    = '<input type="button" id="' . self::$id . '" value="' . $label . '" class="button" />',
+            $callback = array( $this, 'button_description' ),
+            $page     = 'permalink',
+            $section  = 'troubleshooting'
         );
     }
 
@@ -83,11 +81,10 @@ class Rewrite_Flush_Button {
      * Callback used in add_settings_field() to display a brief description and nonce field.
      */
     function button_description() {
-        $desc  = __( 'Flushing rewrite rules if your permalinks are not working correctly. This is usually caused by themes and plugins that add, remove or change custom post types & taxonomies.', 'rewrite-flush-button' );
         printf(
             '<div id="%s_desc" class="description" style="display: inline-block">%s</div>',
             self::$id,
-            $desc
+            __( 'Flushing rewrite rules if your permalinks are not working correctly. This is usually caused by themes and plugins that add, remove or change custom post types & taxonomies.', 'rewrite-flush-button' )
         );
     }
 
