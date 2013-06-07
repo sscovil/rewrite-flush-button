@@ -10,7 +10,8 @@
  * License: GPL2
  */
 
-if ( is_admin() )
+global $pagenow;
+if ( is_admin() && ( 'options-permalink.php' == $pagenow || defined( 'DOING_AJAX' ) ) )
     Rewrite_Flush_Button::instance();
 
 class Rewrite_Flush_Button {
@@ -36,7 +37,7 @@ class Rewrite_Flush_Button {
      * Runs as soon as class is instantiated.
      */
     protected function __construct() {
-        self::$id    = 'rfb_060613';
+        self::$id = 'rfb_060613';
 
         // Load text domain for language translation files.
         load_plugin_textdomain( 'rewrite-flush-button', false, dirname( plugin_basename( __FILE__ ) ) . '/lang' );
@@ -61,8 +62,6 @@ class Rewrite_Flush_Button {
 
     /**
      * Add Settings Field
-     *
-     * Adds the 'Flush Rewrite Rules' button to the Optional section of WP-Admin > Settings > Permalinks.
      */
     function add_settings_field() {
         $label = __( 'Flush Rewrite Rules', 'rewrite-flush-button' );
@@ -78,7 +77,7 @@ class Rewrite_Flush_Button {
     /**
      * Button Description
      *
-     * Callback used in add_settings_field() to display a brief description and nonce field.
+     * Callback used in add_settings_field() to display a brief description.
      */
     function button_description() {
         printf(
@@ -94,22 +93,19 @@ class Rewrite_Flush_Button {
      * Only loads plugin script when viewing WP-Admin > Settings > Permalinks.
      */
     function load_js() {
-        global $pagenow;
-        if ( $pagenow == 'options-permalink.php' ) {
-            wp_register_script(
-                $handle = self::$id,
-                $src    = plugins_url( 'js/rewrite-flush-button.js', __FILE__ ),
-                $deps   = array( 'jquery' )
-            );
-            wp_enqueue_script( self::$id );
+        wp_register_script(
+            $handle = self::$id,
+            $src    = plugins_url( 'js/rewrite-flush-button.js', __FILE__ ),
+            $deps   = array( 'jquery' )
+        );
+        wp_enqueue_script( self::$id );
 
-            // Pass array of parameters to JavaScript as object called 'RFB'.
-            wp_localize_script(
-                $handle      = self::$id,
-                $object_name = 'RFB',
-                $params      = $this->localize_script_parameters()
-            );
-        }
+        // Pass array of parameters to JavaScript as object called 'RFB'.
+        wp_localize_script(
+            $handle      = self::$id,
+            $object_name = 'RFB',
+            $params      = $this->localize_script_parameters()
+        );
     }
 
     /**
