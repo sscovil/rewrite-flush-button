@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Rewrite Flush Button
- * Plugin URI: http://shaunscovil.com
+ * Plugin URI: https://github.com/sscovil/rewrite-flush-button
  * Description: Adds a 'Flush Rewrite Rules' button to WP-Admin > Settings > Permalinks.
  * Version: 1.0
  * Author: sscovil
