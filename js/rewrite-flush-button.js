@@ -14,7 +14,7 @@
                 nonce: $(RFB.nonceid).html() // Nonce field value
             };
 
-            // AJAX call to action function using nonce field value.
+            // AJAX call.
             $.post(ajaxurl, data, function(response) {
 
                 if ('1' === response) {
