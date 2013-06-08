@@ -89,7 +89,7 @@ class Rewrite_Flush_Button {
         printf(
             '<div id="%s_desc" class="description" style="display: inline-block">%s</div>',
             self::$id,
-            __( 'Flushing rewrite rules if your permalinks are not working correctly. This is usually caused by themes and plugins that add, remove or change custom post types & taxonomies.', 'rewrite-flush-button' )
+            __( 'Flush rewrite rules if your permalinks are not working correctly. This is usually caused by themes and plugins that add, remove or change custom post types & taxonomies.', 'rewrite-flush-button' )
         );
     }
 
