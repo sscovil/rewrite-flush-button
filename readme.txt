@@ -24,8 +24,8 @@ Enjoy! :-)
 
 == Installation ==
 
-1. Install and activate the plugin via `WP-Admin > Plugins`.
-2. Go to `WP-Admin > Settings > Permalinks` and click the button to flush rewrite rules.
+1. Don't install.
+2. See plugin description.
 
 
 == Screenshots ==
