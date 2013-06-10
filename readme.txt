@@ -11,9 +11,7 @@ Adds a "Flush Rewrite Rules" button to WP-Admin > Settings > Permalinks.
 
 == Description ==
 
-It was brought to my attention shortly after releasing this plugin that WordPress automatically flushes
-rewrite rules when you visit WP-Admin > Settings > Permalinks. Ingenious, right? So don't bother installing it,
-but feel free to check out the code if you are looking for an example of how to:
+It was brought to my attention shortly after releasing this plugin that WordPress automatically flushes rewrite rules when you visit WP-Admin > Settings > Permalinks. Ingenious, right? So don't bother installing it, but feel free to check out the code if you are looking for an example of how to:
 
 1. Use the WordPress Settings API to add an option to an existing Settings page;
 2. Use the WordPress AJAX API in conjunction with your plugin options;
